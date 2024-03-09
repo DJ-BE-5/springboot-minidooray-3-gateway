@@ -6,6 +6,7 @@ import com.nhnacademy.springbootminidooray3gateway.dto.request.CreateProjectRequ
 import com.nhnacademy.springbootminidooray3gateway.exception.CommonProjectException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectAdaptorImpl implements ProjectAdaptor {
     private final RestTemplate restTemplate;
+    private final ParameterizedTypeReference<List<Project>> projectListType = new ParameterizedTypeReference<>() {};
 
     @Value("${task.service.url}")
     private String taskServiceUrl;
@@ -43,6 +45,33 @@ public class ProjectAdaptorImpl implements ProjectAdaptor {
 
             return exchange.getBody();
         } catch(RestClientException ex) {
+            throw new CommonProjectException();
+        }
+    }
+
+    @Override
+    public List<Project> getProjectList(String xUserId) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+        httpHeaders.set("X-USER-ID", xUserId);
+
+
+        try {
+
+            RequestEntity<Void> requestEntity =
+                    RequestEntity
+                            .get(taskServiceUrl + "/projects")
+                            .headers(httpHeaders)
+                            .build();
+
+            ResponseEntity<List<Project>> exchange = restTemplate.exchange(requestEntity, projectListType);
+
+            if(!exchange.getStatusCode().is2xxSuccessful()) {
+                throw new CommonProjectException();
+            }
+
+            return exchange.getBody();
+        } catch(Exception e) {
             throw new CommonProjectException();
         }
     }

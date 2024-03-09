@@ -3,8 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
 <body>
     <a href="/project/create">프로젝트 만들기</a>
+
+    <h1>프로젝트 목록</h1>
+    <table>
+        <tr>
+            <th>title</th>
+        </tr>
+        <tr th:each="project, status : ${projects}">
+            <td><a th:href="@{'/projects/{id}'(id=${project.projectId})}" th:text="${project.title}"></a></td>
+        </tr>
+    </table>
 </body>
 </html>
