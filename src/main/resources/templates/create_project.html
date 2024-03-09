@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>프로젝트 생성</title>
+</head>
+<body>
+    <h1>프로젝트 생성</h1>
+    <form action="/project/create" method="post">
+        <div>
+            <label for="title">프로젝트 제목</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="content">프로젝트 내용</label>
+            <textarea type="text" id="content" name="content"></textarea>
+        </div>
+        <div>
+            <label for="state">프로젝트 상태</label>
+            <select id="state" name="state">
+                <option value="active">활성</option>
+                <option value="sleep">휴면</option>
+                <option value="close">종료</option>
+            </select>
+        </div>
+
+        <button type="submit">생성</button>
+    </form>
+    <a href="/">돌아가기</a>
+</body>
+</html>

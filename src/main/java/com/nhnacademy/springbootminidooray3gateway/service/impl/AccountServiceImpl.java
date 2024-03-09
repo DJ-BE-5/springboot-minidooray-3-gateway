@@ -14,8 +14,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Member login(LoginRequest loginRequest) {
-        Member member = accountAdaptor.login(loginRequest);
-
-        return member;
+        return accountAdaptor.login(loginRequest);
     }
 }
