@@ -30,7 +30,25 @@
         </tr>
     </table>
 
-    <a th:if="${#session.getAttribute('X-USER').id} eq ${project.adminId}" th:href="@{/projects/{projectId}/members/add(projectId = ${project.projectId})}">멤버 추가</a>
-    <a href="/">홈</a>
+    <div>
+        <a th:if="${#session.getAttribute('X-USER').id} eq ${project.adminId}" th:href="@{/projects/{projectId}/members/add(projectId = ${project.projectId})}">멤버 추가</a>
+    </div>
+    <div th:if="${#session.getAttribute('X-USER').id} eq ${project.adminId}">
+        <form th:action="@{/projects/{projectId}/state(projectId = ${project.projectId})}" method="post">
+            <div>
+                <label for="state">프로젝트 상태</label>
+                <select id="state" name="state">
+                    <option value="active">활성</option>
+                    <option value="sleep">휴면</option>
+                    <option value="close">종료</option>
+                </select>
+            </div>
+
+            <button type="submit">변경</button>
+        </form>
+    </div>
+    <div>
+        <a href="/">홈</a>
+    </div>
 </body>
 </html>

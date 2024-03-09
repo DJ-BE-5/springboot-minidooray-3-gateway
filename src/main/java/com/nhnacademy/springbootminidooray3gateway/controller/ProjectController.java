@@ -3,6 +3,7 @@ package com.nhnacademy.springbootminidooray3gateway.controller;
 import com.nhnacademy.springbootminidooray3gateway.domain.Member;
 import com.nhnacademy.springbootminidooray3gateway.dto.request.AddMemberRequest;
 import com.nhnacademy.springbootminidooray3gateway.dto.request.CreateProjectRequest;
+import com.nhnacademy.springbootminidooray3gateway.dto.request.ModifyProjectStateRequest;
 import com.nhnacademy.springbootminidooray3gateway.service.AccountService;
 import com.nhnacademy.springbootminidooray3gateway.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -30,14 +31,14 @@ public class ProjectController {
 
     @GetMapping("/projects/{projectId}")
     public String viewProject(@SessionAttribute("X-USER") Member xUser,
-                              @PathVariable String projectId,
+                              @PathVariable Long projectId,
                               Model model) {
         model.addAttribute("project", projectService.getProject(projectId, xUser));
         return "project";
     }
 
     @GetMapping("/projects/{projectId}/members/add")
-    public String viewAddMemberForm(@PathVariable String projectId,
+    public String viewAddMemberForm(@PathVariable Long projectId,
                                     @SessionAttribute("X-USER") Member xUser,
                                     Model model) {
 
@@ -46,10 +47,18 @@ public class ProjectController {
     }
 
     @PostMapping("/projects/{projectId}/members/add")
-    public String addMember(@PathVariable String projectId,
+    public String addMember(@PathVariable Long projectId,
                             @ModelAttribute AddMemberRequest request,
                             @SessionAttribute("X-USER") Member xUser) {
         projectService.addMemberToProject(xUser, projectId, request);
         return "redirect:/projects/" + projectId + "/members/add";
+    }
+
+    @PostMapping("/projects/{projectId}/state")
+    public String modifyProjectState(@PathVariable Long projectId,
+                                     @SessionAttribute("X-USER") Member xUser,
+                                     @ModelAttribute ModifyProjectStateRequest request) {
+        projectService.modifyProjectState(xUser, projectId, request);
+        return "redirect:/projects/" + projectId;
     }
 }

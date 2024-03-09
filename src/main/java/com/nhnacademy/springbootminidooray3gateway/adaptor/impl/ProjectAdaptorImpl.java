@@ -4,6 +4,7 @@ import com.nhnacademy.springbootminidooray3gateway.adaptor.ProjectAdaptor;
 import com.nhnacademy.springbootminidooray3gateway.domain.Project;
 import com.nhnacademy.springbootminidooray3gateway.dto.request.AddMemberRequest;
 import com.nhnacademy.springbootminidooray3gateway.dto.request.CreateProjectRequest;
+import com.nhnacademy.springbootminidooray3gateway.dto.request.ModifyProjectStateRequest;
 import com.nhnacademy.springbootminidooray3gateway.dto.response.AddMemberResponse;
 import com.nhnacademy.springbootminidooray3gateway.exception.CommonProjectException;
 import lombok.RequiredArgsConstructor;
@@ -79,7 +80,7 @@ public class ProjectAdaptorImpl implements ProjectAdaptor {
     }
 
     @Override
-    public Project getProject(String projectId, String xUserId) {
+    public Project getProject(Long projectId, String xUserId) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
         httpHeaders.set("X-USER-ID", xUserId);
@@ -101,7 +102,7 @@ public class ProjectAdaptorImpl implements ProjectAdaptor {
     }
 
     @Override
-    public void addMemberToProject(String xUserId, String projectId, AddMemberRequest request) {
+    public AddMemberResponse addMemberToProject(String xUserId, Long projectId, AddMemberRequest request) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
@@ -117,6 +118,31 @@ public class ProjectAdaptorImpl implements ProjectAdaptor {
             if(!exchange.getStatusCode().is2xxSuccessful()) {
                 throw new CommonProjectException();
             }
+
+            return exchange.getBody();
+        } catch(RestClientException ex) {
+            throw new CommonProjectException();
+        }
+    }
+
+    @Override
+    public Project modifyProjectState(String xUserId, Long projectId, ModifyProjectStateRequest request) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+        httpHeaders.set("X-USER-ID", xUserId);
+
+        try {
+            RequestEntity<ModifyProjectStateRequest> requestEntity = RequestEntity
+                    .put(taskServiceUrl + "/project/" + projectId)
+                    .headers(httpHeaders)
+                    .body(request);
+            ResponseEntity<Project> exchange = restTemplate.exchange(requestEntity, Project.class);
+
+            if(!exchange.getStatusCode().is2xxSuccessful()) {
+                throw new CommonProjectException();
+            }
+
+            return exchange.getBody();
         } catch(RestClientException ex) {
             throw new CommonProjectException();
         }
