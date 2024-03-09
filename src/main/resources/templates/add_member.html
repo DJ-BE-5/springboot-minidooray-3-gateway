@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>멤버 추가</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<h1>회원 목록</h1>
+<table>
+    <tr>
+        <th>id</th>
+        <th>email</th>
+    </tr>
+    <tr th:each="account, status : ${accounts}">
+        <td th:text="${account.id}"></td>
+        <td th:text="${account.email}"></td>
+        <td>
+            <form th:action="@{/projects/{projectId}/members/add(projectId = ${projectId})}" method="post">
+                <input type="hidden" name="memberId" th:value="${account.id}">
+                <button type="submit">추가</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a href="/">홈</a>
+</body>
+</html>

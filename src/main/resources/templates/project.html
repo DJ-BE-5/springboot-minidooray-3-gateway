@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>프로젝트</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
 <body>
     <table>
@@ -16,12 +22,15 @@
         </tr>
         <tr>
             <th>상태</th>
-            <td th:text="${project.state}"></td>
+            <td th:text="${project.getState}"></td>
         </tr>
         <tr>
             <th>관리자</th>
             <td th:text="${project.adminId}"></td>
         </tr>
     </table>
+
+    <a th:if="${#session.getAttribute('X-USER').id} eq ${project.adminId}" th:href="@{/projects/{projectId}/members/add(projectId = ${project.projectId})}">멤버 추가</a>
+    <a href="/">홈</a>
 </body>
 </html>

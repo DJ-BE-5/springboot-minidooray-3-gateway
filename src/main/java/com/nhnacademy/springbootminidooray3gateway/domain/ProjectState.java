@@ -1,5 +1,5 @@
 package com.nhnacademy.springbootminidooray3gateway.domain;
 
-public enum State {
+public enum ProjectState {
     active, sleep, close
 }

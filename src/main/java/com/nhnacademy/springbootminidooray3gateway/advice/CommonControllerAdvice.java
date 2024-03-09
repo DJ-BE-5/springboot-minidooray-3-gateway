@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
-public class CommonontrollerAdvice {
+public class CommonControllerAdvice {
     @ExceptionHandler(LoginFailedException.class)
     public ModelAndView handleLoginFailedException(LoginFailedException ex) {
         ModelAndView mav = new ModelAndView("login");

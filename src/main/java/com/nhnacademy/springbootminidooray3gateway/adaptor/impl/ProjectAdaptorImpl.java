@@ -2,7 +2,9 @@ package com.nhnacademy.springbootminidooray3gateway.adaptor.impl;
 
 import com.nhnacademy.springbootminidooray3gateway.adaptor.ProjectAdaptor;
 import com.nhnacademy.springbootminidooray3gateway.domain.Project;
+import com.nhnacademy.springbootminidooray3gateway.dto.request.AddMemberRequest;
 import com.nhnacademy.springbootminidooray3gateway.dto.request.CreateProjectRequest;
+import com.nhnacademy.springbootminidooray3gateway.dto.response.AddMemberResponse;
 import com.nhnacademy.springbootminidooray3gateway.exception.CommonProjectException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -93,6 +95,28 @@ public class ProjectAdaptorImpl implements ProjectAdaptor {
             }
 
             return exchange.getBody();
+        } catch(RestClientException ex) {
+            throw new CommonProjectException();
+        }
+    }
+
+    @Override
+    public void addMemberToProject(String xUserId, String projectId, AddMemberRequest request) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+        httpHeaders.set("X-USER-ID", xUserId);
+
+        try {
+            RequestEntity<AddMemberRequest> requestEntity = RequestEntity
+                    .post(taskServiceUrl + "/projects/" + projectId + "/members")
+                    .headers(httpHeaders)
+                    .body(request);
+            ResponseEntity<AddMemberResponse> exchange = restTemplate.exchange(requestEntity, AddMemberResponse.class);
+
+            if(!exchange.getStatusCode().is2xxSuccessful()) {
+                throw new CommonProjectException();
+            }
         } catch(RestClientException ex) {
             throw new CommonProjectException();
         }

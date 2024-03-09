@@ -1,7 +1,9 @@
 package com.nhnacademy.springbootminidooray3gateway.controller;
 
 import com.nhnacademy.springbootminidooray3gateway.domain.Member;
+import com.nhnacademy.springbootminidooray3gateway.dto.request.AddMemberRequest;
 import com.nhnacademy.springbootminidooray3gateway.dto.request.CreateProjectRequest;
+import com.nhnacademy.springbootminidooray3gateway.service.AccountService;
 import com.nhnacademy.springbootminidooray3gateway.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ProjectController {
     private final ProjectService projectService;
+    private final AccountService accountService;
 
     @GetMapping("/projects/create")
-    public String viewCreateProject() {
+    public String viewCreateProjectForm() {
         return "create_project";
     }
 
@@ -31,5 +34,22 @@ public class ProjectController {
                               Model model) {
         model.addAttribute("project", projectService.getProject(projectId, xUser));
         return "project";
+    }
+
+    @GetMapping("/projects/{projectId}/members/add")
+    public String viewAddMemberForm(@PathVariable String projectId,
+                                    @SessionAttribute("X-USER") Member xUser,
+                                    Model model) {
+
+        model.addAttribute("accounts", accountService.getAccountList(xUser));
+        return "add_member";
+    }
+
+    @PostMapping("/projects/{projectId}/members/add")
+    public String addMember(@PathVariable String projectId,
+                            @ModelAttribute AddMemberRequest request,
+                            @SessionAttribute("X-USER") Member xUser) {
+        projectService.addMemberToProject(xUser, projectId, request);
+        return "redirect:/projects/" + projectId + "/members/add";
     }
 }

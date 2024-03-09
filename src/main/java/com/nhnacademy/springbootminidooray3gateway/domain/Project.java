@@ -12,6 +12,6 @@ public class Project {
     private String projectId;
     private String title;
     private String content;
-    private State state;
+    private ProjectState state;
     private String adminId;
 }

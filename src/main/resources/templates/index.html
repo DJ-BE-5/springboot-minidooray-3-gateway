@@ -19,7 +19,7 @@
             <th>title</th>
         </tr>
         <tr th:each="project, status : ${projects}">
-            <td><a th:href="@{'/projects/{id}'(id=${project.projectId})}" th:text="${project.title}"></a></td>
+            <td><a th:href="@{/projects/{projectId}(projectId = ${project.projectId})}" th:text="${project.title}"></a></td>
         </tr>
     </table>
 </body>

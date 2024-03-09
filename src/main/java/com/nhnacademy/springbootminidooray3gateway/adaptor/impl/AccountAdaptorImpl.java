@@ -3,9 +3,11 @@ package com.nhnacademy.springbootminidooray3gateway.adaptor.impl;
 import com.nhnacademy.springbootminidooray3gateway.adaptor.AccountAdaptor;
 import com.nhnacademy.springbootminidooray3gateway.domain.Member;
 import com.nhnacademy.springbootminidooray3gateway.dto.request.LoginRequest;
+import com.nhnacademy.springbootminidooray3gateway.exception.CommonAccountException;
 import com.nhnacademy.springbootminidooray3gateway.exception.LoginFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -20,6 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountAdaptorImpl implements AccountAdaptor {
     private final RestTemplate restTemplate;
+
+    private final ParameterizedTypeReference<List<Member>> memberListType = new ParameterizedTypeReference<>() {};
 
     @Value("${account.service.url}")
     private String accountServiceUrl;
@@ -41,6 +45,27 @@ public class AccountAdaptorImpl implements AccountAdaptor {
             return exchange.getBody();
         } catch(RestClientException ex) {
             throw new LoginFailedException();
+        }
+    }
+
+    @Override
+    public List<Member> getAccountList(String xUserId) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+        httpHeaders.set("X-USER-ID", xUserId);
+
+        try {
+            RequestEntity requestEntity = RequestEntity.get(accountServiceUrl + "/accounts").headers(httpHeaders).build();
+            ResponseEntity<List<Member>> exchange = restTemplate.exchange(requestEntity, memberListType);
+
+            if(!exchange.getStatusCode().is2xxSuccessful()) {
+                throw new CommonAccountException();
+            }
+
+            return exchange.getBody();
+        } catch(RestClientException ex) {
+            throw new CommonAccountException();
         }
     }
 }

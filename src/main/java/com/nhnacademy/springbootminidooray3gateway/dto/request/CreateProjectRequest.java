@@ -1,6 +1,6 @@
 package com.nhnacademy.springbootminidooray3gateway.dto.request;
 
-import com.nhnacademy.springbootminidooray3gateway.domain.State;
+import com.nhnacademy.springbootminidooray3gateway.domain.ProjectState;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -18,5 +18,5 @@ public class CreateProjectRequest {
     private String content;
 
     @NonNull @NotNull
-    private State state;
+    private ProjectState state;
 }

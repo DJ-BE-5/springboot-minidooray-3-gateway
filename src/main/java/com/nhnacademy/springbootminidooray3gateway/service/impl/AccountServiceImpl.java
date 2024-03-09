@@ -7,6 +7,8 @@ import com.nhnacademy.springbootminidooray3gateway.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
@@ -15,5 +17,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Member login(LoginRequest loginRequest) {
         return accountAdaptor.login(loginRequest);
+    }
+
+    @Override
+    public List<Member> getAccountList(Member xUser) {
+        return accountAdaptor.getAccountList(xUser.getId());
     }
 }

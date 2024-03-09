@@ -3,6 +3,7 @@ package com.nhnacademy.springbootminidooray3gateway.service.impl;
 import com.nhnacademy.springbootminidooray3gateway.adaptor.ProjectAdaptor;
 import com.nhnacademy.springbootminidooray3gateway.domain.Member;
 import com.nhnacademy.springbootminidooray3gateway.domain.Project;
+import com.nhnacademy.springbootminidooray3gateway.dto.request.AddMemberRequest;
 import com.nhnacademy.springbootminidooray3gateway.dto.request.CreateProjectRequest;
 import com.nhnacademy.springbootminidooray3gateway.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project getProject(String projectId, Member xUser) {
         return projectAdaptor.getProject(projectId, xUser.getId());
+    }
+
+    @Override
+    public void addMemberToProject(Member xUser, String projectId, AddMemberRequest request) {
+        projectAdaptor.addMemberToProject(xUser.getId(), projectId, request);
     }
 }
