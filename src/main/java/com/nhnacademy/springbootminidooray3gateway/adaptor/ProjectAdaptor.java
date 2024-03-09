@@ -9,4 +9,6 @@ public interface ProjectAdaptor {
     Project createProject(CreateProjectRequest request, String xUserId);
 
     List<Project> getProjectList(String xUserId);
+
+    Project getProject(String projectId, String xUserId);
 }

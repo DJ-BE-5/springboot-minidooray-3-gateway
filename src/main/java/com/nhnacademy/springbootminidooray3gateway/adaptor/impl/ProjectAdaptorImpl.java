@@ -75,4 +75,26 @@ public class ProjectAdaptorImpl implements ProjectAdaptor {
             throw new CommonProjectException();
         }
     }
+
+    @Override
+    public Project getProject(String projectId, String xUserId) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+        httpHeaders.set("X-USER-ID", xUserId);
+
+        try {
+            RequestEntity<Void> requestEntity = RequestEntity.get(taskServiceUrl + "/projects/" + projectId)
+                    .headers(httpHeaders)
+                    .build();
+            ResponseEntity<Project> exchange = restTemplate.exchange(requestEntity, Project.class);
+
+            if(!exchange.getStatusCode().is2xxSuccessful()) {
+                throw new CommonProjectException();
+            }
+
+            return exchange.getBody();
+        } catch(RestClientException ex) {
+            throw new CommonProjectException();
+        }
+    }
 }

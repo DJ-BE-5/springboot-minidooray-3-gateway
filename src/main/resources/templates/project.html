@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>프로젝트</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>제목</th>
+            <td th:text="${project.title}"></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td th:text="${project.content}"></td>
+        </tr>
+        <tr>
+            <th>상태</th>
+            <td th:text="${project.state}"></td>
+        </tr>
+        <tr>
+            <th>관리자</th>
+            <td th:text="${project.adminId}"></td>
+        </tr>
+    </table>
+</body>
+</html>

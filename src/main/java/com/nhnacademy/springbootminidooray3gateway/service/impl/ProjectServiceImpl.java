@@ -23,4 +23,9 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getProjectList(Member xUser) {
         return projectAdaptor.getProjectList(xUser.getId());
     }
+
+    @Override
+    public Project getProject(String projectId, Member xUser) {
+        return projectAdaptor.getProject(projectId, xUser.getId());
+    }
 }

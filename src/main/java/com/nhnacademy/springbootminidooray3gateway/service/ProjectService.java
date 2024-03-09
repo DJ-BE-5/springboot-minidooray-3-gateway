@@ -10,4 +10,6 @@ public interface ProjectService {
     void createProject(CreateProjectRequest request, Member xUser);
 
     List<Project> getProjectList(Member xUser);
+
+    Project getProject(String projectId, Member xUser);
 }
