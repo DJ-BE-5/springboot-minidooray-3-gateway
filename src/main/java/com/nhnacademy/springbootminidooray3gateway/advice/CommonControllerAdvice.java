@@ -12,7 +12,7 @@ public class CommonControllerAdvice {
     @ExceptionHandler(LoginFailedException.class)
     public ModelAndView LoginFailedHandler(LoginFailedException ex) {
         ModelAndView mav = new ModelAndView("login");
-        mav.addObject("error");
+        mav.addObject("error", ex);
         return mav;
     }
 

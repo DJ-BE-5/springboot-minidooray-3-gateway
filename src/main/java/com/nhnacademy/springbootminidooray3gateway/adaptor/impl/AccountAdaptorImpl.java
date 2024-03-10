@@ -82,7 +82,7 @@ public class AccountAdaptorImpl implements AccountAdaptor {
 
         try {
             RequestEntity<SignUpRequestDto> requestEntity = RequestEntity
-                    .post(accountServiceUrl + "/login")
+                    .post(accountServiceUrl + "/signup")
                     .headers(httpHeaders)
                     .body(request);
             ResponseEntity<Member> exchange = restTemplate
