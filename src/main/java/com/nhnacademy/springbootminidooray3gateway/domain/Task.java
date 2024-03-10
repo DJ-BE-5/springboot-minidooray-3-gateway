@@ -3,6 +3,7 @@ package com.nhnacademy.springbootminidooray3gateway.domain;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -10,7 +11,9 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class Task {
+public class Task implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @NotNull @NonNull
     private Long taskId;
 

@@ -3,6 +3,7 @@ package com.nhnacademy.springbootminidooray3gateway.controller;
 import com.nhnacademy.springbootminidooray3gateway.domain.Member;
 import com.nhnacademy.springbootminidooray3gateway.domain.Task;
 import com.nhnacademy.springbootminidooray3gateway.dto.request.AddTaskRequest;
+import com.nhnacademy.springbootminidooray3gateway.dto.request.ModifyTaskRequest;
 import com.nhnacademy.springbootminidooray3gateway.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -46,4 +47,21 @@ public class TaskController {
         taskService.removeTask(xUser, taskId);
         return "redirect:/";
     }
+
+    @GetMapping("/tasks/{taskId}/modify")
+    public String viewModifyTaskForm(@SessionAttribute("X-USER") Member xUser,
+                                     @PathVariable Long taskId,
+                                     Model model) {
+        model.addAttribute("task", taskService.getTask(xUser, taskId));
+        return "modify_task";
+    }
+
+    @PostMapping("/tasks/{taskId}/modify")
+    public String modifyTask(@SessionAttribute("X-USER") Member xUser,
+                             @PathVariable Long taskId,
+                             @ModelAttribute ModifyTaskRequest request) {
+        taskService.modifyTask(xUser, taskId, request);
+        return "redirect:/tasks/" + taskId;
+    }
 }
+

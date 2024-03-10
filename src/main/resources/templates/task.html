@@ -22,6 +22,10 @@
     </form>
 
     <div>
+        <a th:href="@{/tasks/{taskId}/modify(taskId = ${task.taskId})}">수정</a>
+    </div>
+
+    <div>
         <a href="/">홈</a>
     </div>
 </body>

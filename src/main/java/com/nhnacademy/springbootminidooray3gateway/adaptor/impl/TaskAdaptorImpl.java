@@ -103,6 +103,7 @@ public class TaskAdaptorImpl implements TaskAdaptor {
 
             RequestEntity<ModifyTaskRequest> requestEntity = RequestEntity
                     .put(taskServiceUrl + "/tasks/" + taskId)
+                    .headers(httpHeaders)
                     .body(request);
             ResponseEntity<Task> exchange = restTemplate.exchange(requestEntity, Task.class);
 
