@@ -19,6 +19,6 @@ public class CommonControllerAdvice {
     @ExceptionHandler(ConflictException.class)
     public String conflictHandler(ConflictException ex, Model model) {
         model.addAttribute("error", ex);
-        return "error";
+        return "custom_error";
     }
 }

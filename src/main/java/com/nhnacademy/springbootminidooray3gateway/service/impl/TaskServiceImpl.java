@@ -27,8 +27,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void addTaskToProject(Member xUser, Long projectId, AddTaskRequest request) {
-        taskAdaptor.addTask(xUser.getId(), projectId, request);
+    public Task addTaskToProject(Member xUser, Long projectId, AddTaskRequest request) {
+        return taskAdaptor.addTask(xUser.getId(), projectId, request);
     }
 
     @Override

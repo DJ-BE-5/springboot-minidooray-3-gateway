@@ -12,7 +12,7 @@ public interface TaskService {
 
     Task getTask(Member xUser, Long taskId);
 
-    void addTaskToProject(Member xUser, Long projectId, AddTaskRequest request);
+    Task addTaskToProject(Member xUser, Long projectId, AddTaskRequest request);
 
     void modifyTask(Member xUser, Long taskId, ModifyTaskRequest request);
 }

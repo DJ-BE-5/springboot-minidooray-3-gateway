@@ -79,7 +79,7 @@ public class TaskAdaptorImpl implements TaskAdaptor {
             httpHeaders.set("X-USER-ID", xUserId);
 
             RequestEntity<AddTaskRequest> requestEntity = RequestEntity
-                    .post(taskServiceUrl + "/tasks")
+                    .post(taskServiceUrl + "/projects" + projectId + "/tasks")
                     .body(request);
             ResponseEntity<Task> exchange = restTemplate.exchange(requestEntity, Task.class);
 
