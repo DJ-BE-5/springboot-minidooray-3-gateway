@@ -39,4 +39,11 @@ public class TaskController {
         model.addAttribute("task", task);
         return "task";
     }
+
+    @GetMapping("/tasks/{taskId}/delete")
+    public String removeTask(@SessionAttribute("X-USER") Member xUser,
+                             @PathVariable Long taskId) {
+        taskService.removeTask(xUser, taskId);
+        return "redirect:/";
+    }
 }

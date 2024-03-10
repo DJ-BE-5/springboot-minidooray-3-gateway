@@ -17,6 +17,10 @@
         </tr>
     </table>
 
+    <form th:action="@{/tasks/{taskId}/delete(taskId = ${task.taskId})}" method="get">
+        <button type="submit">삭제</button>
+    </form>
+
     <div>
         <a href="/">홈</a>
     </div>

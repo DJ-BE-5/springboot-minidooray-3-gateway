@@ -114,4 +114,23 @@ public class TaskAdaptorImpl implements TaskAdaptor {
             throw new RuntimeException(ex);
         }
     }
+
+    @Override
+    public void removeTask(String xUserId, Long taskId) {
+        try {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+            httpHeaders.set("X-USER-ID", xUserId);
+
+            RequestEntity<Void> requestEntity = RequestEntity.delete(taskServiceUrl + "/tasks/" + taskId)
+                    .headers(httpHeaders)
+                    .build();
+            ResponseEntity<Void> exchange = restTemplate.exchange(requestEntity, Void.class);
+
+            if(!exchange.getStatusCode().is2xxSuccessful())
+                throw new RuntimeException();
+        } catch(Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

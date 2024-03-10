@@ -35,4 +35,9 @@ public class TaskServiceImpl implements TaskService {
     public void modifyTask(Member xUser, Long taskId, ModifyTaskRequest request) {
         taskAdaptor.modifyTask(xUser.getId(), taskId, request);
     }
+
+    @Override
+    public void removeTask(Member xUser, Long taskId) {
+        taskAdaptor.removeTask(xUser.getId(), taskId);
+    }
 }

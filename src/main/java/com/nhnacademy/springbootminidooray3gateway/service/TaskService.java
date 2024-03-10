@@ -15,4 +15,6 @@ public interface TaskService {
     Task addTaskToProject(Member xUser, Long projectId, AddTaskRequest request);
 
     void modifyTask(Member xUser, Long taskId, ModifyTaskRequest request);
+
+    void removeTask(Member xUser, Long taskId);
 }

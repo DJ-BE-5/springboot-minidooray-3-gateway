@@ -14,4 +14,6 @@ public interface TaskAdaptor {
     Task addTask(String xUserId, Long projectId, AddTaskRequest request);
 
     Task modifyTask(String xUserId, Long taskId, ModifyTaskRequest request);
+
+    void removeTask(String xUserId, Long taskId);
 }
