@@ -3,6 +3,7 @@ package com.nhnacademy.springbootminidooray3gateway.service.impl;
 import com.nhnacademy.springbootminidooray3gateway.adaptor.AccountAdaptor;
 import com.nhnacademy.springbootminidooray3gateway.domain.Member;
 import com.nhnacademy.springbootminidooray3gateway.dto.request.LoginRequest;
+import com.nhnacademy.springbootminidooray3gateway.dto.request.SignUpRequestDto;
 import com.nhnacademy.springbootminidooray3gateway.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<Member> getAccountList(Member xUser) {
         return accountAdaptor.getAccountList(xUser.getId());
+    }
+
+    @Override
+    public void signUp(SignUpRequestDto request) {
+        accountAdaptor.signUp(request);
     }
 }
