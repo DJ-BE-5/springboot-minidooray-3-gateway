@@ -134,7 +134,7 @@ public class ProjectAdaptorImpl implements ProjectAdaptor {
 
         try {
             RequestEntity<ModifyProjectStateRequest> requestEntity = RequestEntity
-                    .put(taskServiceUrl + "/project/" + projectId)
+                    .put(taskServiceUrl + "/projects/" + projectId)
                     .headers(httpHeaders)
                     .body(request);
             ResponseEntity<Project> exchange = restTemplate.exchange(requestEntity, Project.class);
