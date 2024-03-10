@@ -11,6 +11,8 @@
     </style>
 </head>
 <body>
+    <h1>프로젝트</h1>
+    <h3>프로젝트 정보</h3>
     <table>
         <tr>
             <th>제목</th>
@@ -30,23 +32,38 @@
         </tr>
     </table>
 
+    <h3>업무 목록</h3>
+    <table>
+        <tr>
+            <th>업무 제목</th>
+        </tr>
+        <tr th:each="task, status : ${tasks}">
+            <td><a th:href="@{/tasks/{taskId}(taskId = ${task.taskId})}" th:text="${task.title}"></a></td>
+        </tr>
+    </table>
+
+    <h3>-----</h3>
+
     <div>
         <a th:if="${#session.getAttribute('X-USER').id} eq ${project.adminId}" th:href="@{/projects/{projectId}/members/add(projectId = ${project.projectId})}">멤버 추가</a>
     </div>
+
+    <br />
+
     <div th:if="${#session.getAttribute('X-USER').id} eq ${project.adminId}">
         <form th:action="@{/projects/{projectId}/state(projectId = ${project.projectId})}" method="post">
-            <div>
-                <label for="state">프로젝트 상태</label>
-                <select id="state" name="state">
-                    <option value="active">활성</option>
-                    <option value="sleep">휴면</option>
-                    <option value="close">종료</option>
-                </select>
-            </div>
-
+            <label for="state">프로젝트 상태</label>
+            <select id="state" name="state">
+                <option value="active">활성</option>
+                <option value="sleep">휴면</option>
+                <option value="close">종료</option>
+            </select>
             <button type="submit">변경</button>
         </form>
     </div>
+
+    <br />
+
     <div>
         <a href="/">홈</a>
     </div>

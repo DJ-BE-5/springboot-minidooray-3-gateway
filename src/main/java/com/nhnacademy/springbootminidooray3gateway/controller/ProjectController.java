@@ -6,6 +6,7 @@ import com.nhnacademy.springbootminidooray3gateway.dto.request.CreateProjectRequ
 import com.nhnacademy.springbootminidooray3gateway.dto.request.ModifyProjectStateRequest;
 import com.nhnacademy.springbootminidooray3gateway.service.AccountService;
 import com.nhnacademy.springbootminidooray3gateway.service.ProjectService;
+import com.nhnacademy.springbootminidooray3gateway.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProjectController {
     private final ProjectService projectService;
     private final AccountService accountService;
+    private final TaskService taskService;
 
     @GetMapping("/projects/create")
     public String viewCreateProjectForm() {
@@ -34,6 +36,8 @@ public class ProjectController {
                               @PathVariable Long projectId,
                               Model model) {
         model.addAttribute("project", projectService.getProject(projectId, xUser));
+        model.addAttribute("tasks", taskService.getTasksByProjectId(xUser, projectId));
+
         return "project";
     }
 
@@ -41,7 +45,6 @@ public class ProjectController {
     public String viewAddMemberForm(@PathVariable Long projectId,
                                     @SessionAttribute("X-USER") Member xUser,
                                     Model model) {
-
         model.addAttribute("accounts", accountService.getAccountList(xUser));
         return "add_member";
     }

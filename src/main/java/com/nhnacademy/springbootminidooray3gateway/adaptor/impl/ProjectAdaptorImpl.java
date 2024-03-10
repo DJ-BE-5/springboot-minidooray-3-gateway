@@ -128,6 +128,7 @@ public class ProjectAdaptorImpl implements ProjectAdaptor {
     @Override
     public Project modifyProjectState(String xUserId, Long projectId, ModifyProjectStateRequest request) {
         HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
         httpHeaders.set("X-USER-ID", xUserId);
 
